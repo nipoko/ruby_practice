@@ -32,7 +32,8 @@ class Array
   end
 end
 
-input = File.readlines("./input.txt").map(&:chomp).delete_at(0)
+input = File.readlines("./input.txt").map(&:chomp)
+input.delete_at(0)
 
 input.each do |data|
   puts data.split(" ").map(&:to_i).right_triangle? ? "YES" : "NO"
