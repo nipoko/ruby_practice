@@ -32,3 +32,16 @@ f(x) = x ** 2
 =end
 
 # 指針：loopとbreak
+
+File.readlines("./input.txt").map(&:to_i).each do |d|
+  s = 0
+  loop_num = 1
+
+  loop do
+    break if loop_num * d >= 600
+    s += ((loop_num * d) ** 2) * d
+    loop_num += 1
+  end
+
+  puts s
+end
