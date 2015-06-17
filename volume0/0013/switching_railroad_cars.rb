@@ -40,3 +40,12 @@ AOJ問題 volume0-0013 車両入れ替え
 =end
 
 # 指針：スタック（stack）
+
+stack = []
+
+File.readlines("./input.txt").map(&:to_i).each do |n|
+  case n
+  when 0 then puts stack.pop
+  else stack.push n
+  end
+end
