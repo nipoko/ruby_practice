@@ -23,3 +23,21 @@ AOJ問題 volume0-0015 国家予算
 1800
 10000000000000000000000000000000000000000
 =end
+
+file = File.readlines("./input.txt").map(&:to_i)
+
+file.shift
+sum = 0
+
+file.each_with_index do |n, i|
+  if i.even? then
+    sum = n
+  else
+    sum += n
+    if sum.to_s.size > 80 then
+      puts "overflow"
+    else
+      puts sum
+    end
+  end
+end
