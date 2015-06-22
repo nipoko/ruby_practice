@@ -27,3 +27,54 @@ this is the picture that i took in the trip.
 
 # 指針：効率の良い復号方法を考える
 # 暗号文字列を「隣のアルファベットといくつ離れているか」で数値化
+
+class String
+  def word_diff
+    ret = []
+    self.size.times do |n|
+      next if n == 0
+      ret << self[n - 1].ord - self[n].ord
+    end
+    return ret
+  end
+
+  def get_key
+    return case self.size
+    when 2 then self[0].ord - "i".ord
+    when 4 then self[0].ord - "t".ord
+    end
+  end
+end
+
+class Array
+  def target_word?
+    return case self.size
+    when 1 then self == [-11]
+    when 3 then self == [12, -1, -10] || self == [12, 7, -19]
+    else false
+    end
+  end
+end
+
+file = File.readlines("./input.txt").map(&:chomp)
+
+file.each do |line|
+  cipher_key = 0
+  words = line.split(" ")
+
+  words.each do |word|
+    if word.word_diff.target_word? then
+      cipher_key = word.get_key
+      break
+    end
+  end
+
+  line.each_char {|c|
+    case c
+    when " " then print c
+    when "." then print c
+    else print c.ord.-(cipher_key).chr
+    end
+  }
+  puts
+end
