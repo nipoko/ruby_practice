@@ -41,3 +41,42 @@ b4 (Bさん４個目の数：０から９の整数)
 1 1
 3 0
 =end
+
+class Hash
+  def hit
+    hit_num = 0
+    4.times do |n|
+      hit_num += 1 if self[:input][n] == self[:output][n]
+    end
+    return hit_num
+  end
+
+  def blow
+    blow_num = 0
+    4.times do |n|
+      blow_num += 1 if self[:input].include?(self[:output][n])
+    end
+    return blow_num - self.hit
+  end
+
+  def hit_and_blow
+    self.hit.to_s + " " + self.blow.to_s
+  end
+end
+
+datas = []
+tmp = Hash.new()
+
+File.readlines("./input.txt").each do |data|
+  if tmp[:input] == nil then
+    tmp[:input] = data.split(" ").map(&:to_i)
+  else
+    tmp[:output] = data.split(" ").map(&:to_i)
+    datas << tmp
+    tmp = Hash.new()
+  end
+end
+
+datas.each do |hash|
+  puts hash.hit_and_blow
+end
