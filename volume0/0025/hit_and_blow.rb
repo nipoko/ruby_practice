@@ -43,24 +43,19 @@ b4 (Bさん４個目の数：０から９の整数)
 =end
 
 class Hash
-  def hit
-    hit_num = 0
-    4.times do |n|
-      hit_num += 1 if self[:input][n] == self[:output][n]
-    end
-    return hit_num
-  end
-
-  def blow
-    blow_num = 0
-    4.times do |n|
-      blow_num += 1 if self[:input].include?(self[:output][n])
-    end
-    return blow_num - self.hit
-  end
-
   def hit_and_blow
-    self.hit.to_s + " " + self.blow.to_s
+    hit_num = 0
+    blow_num = 0
+
+    4.times do |n|
+      if self[:input][n] == self[:output][n]
+        hit_num += 1
+      elsif self[:input].include?(self[:output][n])
+        blow_num += 1
+      end
+    end
+
+    hit_num.to_s + " " + blow_num.to_s
   end
 end
 
