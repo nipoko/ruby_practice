@@ -16,9 +16,13 @@ AOJ問題 volume0-0009 素数
 2
 5
 =end
-require "prime"
 
-File.readlines("./input.txt").map(&:to_i).each do |n|
+require "prime"
+ 
+while line = gets
   prime_num = 0
-  puts Prime.each(n){ prime_num += 1 }
+  Prime.each(line.to_i){
+    prime_num += 1
+  }
+  puts prime_num
 end

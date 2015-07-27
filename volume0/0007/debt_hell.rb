@@ -21,7 +21,5 @@ class Numeric
     end
   end
 end
-
-week = File.read("./input.txt").to_i
-
-puts 100_000.calc_debt(week)
+ 
+puts 100_000.calc_debt(gets.to_i)

@@ -12,4 +12,6 @@ w32nimda
 admin23w
 =end
 
-puts File.read("./input.txt").chomp.reverse
+while line = gets
+  puts line.chomp.reverse
+end

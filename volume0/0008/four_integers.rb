@@ -16,17 +16,24 @@ a + b + c + d = n
 4
 =end
 
-class Fixnum
-  def search_sum_case
-    range_ary = (0..9).to_a
+class Combi
+  def initialize(sum)
+    @sum = sum
+  end
+ 
+  attr_accessor :sum
+ 
+  def calc(num)
     ret = 0
-    range_ary.to_a.product(range_ary, range_ary, range_ary).each do |ary|
-      ret += 1 if ary.inject(:+) == self
+ 
+    (0..9).to_a.repeated_permutation(num).each do |ary|
+      ret += 1 if ary.inject(:+) == @sum
     end
+ 
     return ret
   end
 end
-
-File.readlines("./input.txt").map(&:to_i).each do |n|
-  puts n.search_sum_case
+ 
+while line = gets
+  puts Combi.new(line.to_i).calc(4)
 end

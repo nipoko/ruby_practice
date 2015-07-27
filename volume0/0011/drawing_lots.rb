@@ -24,22 +24,27 @@ an, bn # n番目の横棒
 4 1 2 5 3
 =end
 
-class Array
-  def switch(datas)
-    datas.each do |data|
-      tmp               = self[data[1] - 1]
-      self[data[1] - 1] = self[data[0] - 1]
-      self[data[0] - 1] = tmp
+class DrawingLots
+  def initialize(width, switch_ary)
+    @results = (1..width).to_a
+    switch_ary.each do |data|
+      tmp                   = @results[data[1] - 1]
+      @results[data[1] - 1] = @results[data[0] - 1]
+      @results[data[0] - 1] = tmp
     end
-    return self
+  end
+ 
+  attr_accessor :results
+ 
+  def all_result
+    return @results
   end
 end
-
-data = File.readlines("./input.txt").map(&:chomp)
-width = data[0].to_i
-switch_num = data[1].to_i
-switch_ary = data.slice(2, switch_num).map { |hoge|
-  hoge.split(",").map(&:to_i)
-}
-
-puts (1..width).to_a.switch(switch_ary)
+ 
+width = gets.to_i
+switch_ary = []
+gets.to_i.times do
+  switch_ary << gets.split(",").map(&:to_i)
+end
+ 
+puts DrawingLots.new(width, switch_ary).all_result.join("\n")

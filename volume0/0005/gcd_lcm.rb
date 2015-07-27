@@ -13,16 +13,10 @@ AOJ問題 volume0-0005 最大公約数と最小公倍数
 2 24
 10000000 150000000
 =end
+
 require "rational"
-
-class Array
-  def print_gcd_lcm
-    print "#{self[0].gcd(self[1])} #{self[0].lcm(self[1])}"
-  end
-end
-
-input = File.readlines("./input.txt").map(&:chomp)
-
-input.each do |data|
-  puts data.split(" ").map(&:to_i).print_gcd_lcm
+ 
+while line = gets
+  data = line.split(" ").map(&:to_i)
+  puts "#{data[0].gcd(data[1])} #{data[0].lcm(data[1])}"
 end

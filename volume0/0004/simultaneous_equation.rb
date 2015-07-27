@@ -16,21 +16,23 @@ dx + ey = f
 1.000 4.000
 =end
 
-class Array
-  def simultaneous
-    x = (self[2] * self[4] - self[1] * self[5]) / (self[0] * self[4] - self[1] * self[3]).to_f
-    y = (self[2] * self[3] - self[0] * self[5]) / (self[1] * self[3] - self[0] * self[4]).to_f
+class Simultaneous
+  def initialize(input)
+    @a,@b,@c,@d,@e,@f = input.split(" ").map(&:to_f)
+  end
+ 
+  attr_accessor :a,:b,:c,:d,:e,:f
+ 
+  def calc
+    x = (@c * @e - @b * @f) / (@a * @e - @b * @d).to_f
+    y = (@c * @d - @a * @f) / (@b * @d - @a * @e).to_f
+    x = 0 if x.abs == 0.0
+    y = 0 if y.abs == 0.0
     return [x, y]
   end
-
-  def print_float
-    print sprintf("%.3f %.3f", self[0], self[1])
-  end
 end
-
-
-file = File.readlines("./input.txt").map(&:chomp)
-
-file.each do |data|
-  puts data.split(" ").map(&:to_i).simultaneous.print_float
+ 
+while data = gets
+  ans = Simultaneous.new(data).calc
+  puts sprintf("%.3f %.3f", ans[0], ans[1])
 end

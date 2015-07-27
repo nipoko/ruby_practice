@@ -21,4 +21,10 @@ AOJ問題 volume0-0001 山の高さ
 2840
 =end
 
-puts File.readlines("./top3hills.txt").map(&:to_i).sort{|a, b| b <=> a}.slice(0, 3)
+nums = []
+ 
+10.times do
+  nums << gets.to_i
+end
+ 
+puts nums.sort.reverse.slice(0, 3).join("\n")

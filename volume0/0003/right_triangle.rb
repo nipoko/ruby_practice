@@ -25,16 +25,19 @@ NO
 NO
 =end
 
-class Array
+class Triangle
+  def initialize(array)
+    @lengths = array.sort
+  end
+
+  attr_accessor :lengths
+
   def right_triangle?
-    length = self.slice(0, 3).map(&:to_i).sort
-    (length[0] ** 2) + (length[1] ** 2) == length[2] ** 2
+    (@lengths[0] ** 2) + (@lengths[1] ** 2) == @lengths[2] ** 2
   end
 end
 
-input = File.readlines("./input.txt").map(&:chomp)
-input.delete_at(0)
-
-input.each do |data|
-  puts data.split(" ").map(&:to_i).right_triangle? ? "YES" : "NO"
+case_num = gets.to_i
+case_num.times do
+  puts Triangle.new(gets.split(" ").map(&:to_i)).right_triangle? ? "YES" : "NO"
 end

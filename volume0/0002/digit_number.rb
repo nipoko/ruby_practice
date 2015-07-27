@@ -12,4 +12,6 @@ AOJ問題 volume0-0002 整数の和の桁数
 4
 =end
 
-puts File.readlines("./digit_number.txt").map{|data| data.split(" ").map(&:to_i).inject(:+).to_s.size}
+while s = gets
+  puts s.split(" ").map(&:to_i).inject(:+).to_s.size
+end

@@ -18,39 +18,45 @@ x1 y1 x2 y2 x3 y3
 1.000 1.000 1.414
 =end
 
-class Array
+class TwoPoints
+  def initialize(array)
+      @x1, @y1, @x2, @y2 = array
+  end
+ 
+  attr_accessor :x1, :y1, :x2, :y2
+ 
   def bisector
     return [
-      self[2] - self[0],
-      self[3] - self[1],
-      (self[2] ** 2 + self[3] ** 2 - self[0] ** 2 - self[1] ** 2) / 2.0,
-      self[4] - self[0],
-      self[5] - self[1],
-      (self[4] ** 2 + self[5] ** 2 - self[0] ** 2 - self[1] ** 2) / 2.0,
+      @x2 - @x1,
+      @y2 - @y1,
+      (@x2 ** 2 + @y2 ** 2 - @x1 ** 2 - @y1 ** 2) / 2.0
     ]
   end
-
+ 
   def distance
-    return Math.sqrt(self[2] ** 2 + self[3] ** 2 - self[0] ** 2 - self[1] ** 2)
-  end
-
-  def simultaneous
-    x = (self[2] * self[4] - self[1] * self[5]) / (self[0] * self[4] - self[1] * self[3]).to_f
-    y = (self[2] * self[3] - self[0] * self[5]) / (self[1] * self[3] - self[0] * self[4]).to_f
-    return [x, y]
-  end
-
-  def print_float
-    print sprintf("%.3f %.3f %.3f", self[0], self[1], self[2])
+    return Math.sqrt(((@x2 - @x1) ** 2 + (@y2 - @y1) ** 2).abs)
   end
 end
-
-input = File.readlines("./input.txt").map(&:chomp)
-input.delete_at(0)
-
-input.each do |data|
-  data_ary = data.split(" ").map(&:to_f)
-  center = data_ary.bisector.simultaneous
-  r = [data_ary[0], data_ary[1], center[0], center[1]].distance
-  puts [center[0], center[1], r].print_float
+ 
+class Simultaneous
+  def initialize(array)
+    @a,@b,@c,@d,@e,@f = array
+  end
+ 
+  attr_accessor :a,:b,:c,:d,:e,:f
+ 
+  def calc
+    x = (@c * @e - @b * @f) / (@a * @e - @b * @d).to_f
+    y = (@c * @d - @a * @f) / (@b * @d - @a * @e).to_f
+    x = 0 if x.abs == 0.0
+    y = 0 if y.abs == 0.0
+    return [x, y]
+  end
+end
+ 
+gets.to_i.times do
+  data = gets.split(" ").map(&:to_f)
+  center = Simultaneous.new(TwoPoints.new(data.slice(0, 4)).bisector + TwoPoints.new(data.slice(2, 4)).bisector).calc
+  radius = TwoPoints.new(data.slice(0, 2) + center).distance
+  puts sprintf("%.3f %.3f %.3f", center[0], center[1], radius)
 end
