@@ -13,6 +13,6 @@ a b c d e
 9 7 6 5 3
 =end
 
-File.readlines("./input.txt").map(&:chomp).each do |line|
-  puts line.split(" ").map(&:to_i).sort{|a, b| b <=> a}.join(" ")
+while line = gets
+  puts line.split(" ").map(&:to_i).sort.reverse.join(" ")
 end

@@ -21,5 +21,5 @@ class Fixnum
     end
   end
 end
-
-puts File.read("./input.txt").to_i.factorial
+ 
+puts gets.to_i.factorial

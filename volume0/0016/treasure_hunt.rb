@@ -41,20 +41,21 @@ x,yをそれぞれ1行に出力してください。
 # 「北を向いた状態」からスタート ⇒ 初期角度が90度
 # 角度はプラスが右回転、マイナスが左回転 ⇒ 逆回転（-1を掛けてから足す）
 
-file = []
-File.readlines("./input.txt").map(&:chomp).each do |data|
-  file << data.split(",").map(&:to_i)
+datas = []
+ 
+while data = gets
+  datas << data.split(",").map(&:to_i)
 end
-
+ 
 x = 0
 y = 0
 prev_rad = 90 * Math::PI / 180.0
-
-file.each do |data|
+ 
+datas.each do |data|
   x += data[0] * Math.cos(prev_rad)
   y += data[0] * Math.sin(prev_rad)
   prev_rad -= data[1] * Math::PI / 180.0
 end
-
+ 
 puts x.to_i
 puts y.to_i

@@ -13,4 +13,4 @@ this is a pen.
 THIS IS A PEN.
 =end
 
-puts File.read("./input.txt").chomp.upcase
+puts gets.chomp.upcase

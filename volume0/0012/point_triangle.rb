@@ -29,38 +29,23 @@ NO
 # 「直線に対して2点が同じ側にある」とは：
 # 点と直線との距離を算出して掛け合わせたときにプラスであれば同じ側、マイナスであれば反対側
 
-class Array
-  def distance
-    return self[4] - self[0] if self[0] == self[2]
-    a = self[3] - self[1]
-    b = self[2] - self[0]
-    c = a * self[0] - b * self[1]
-    a * self[4] - b * self[5] + c / Math.sqrt(a ** 2 + b ** 2)
-  end
-
-  def same_side?
-    if [self[0], self[1], self[2], self[3], self[4], self[5]].distance * [self[0], self[1], self[2], self[3], self[6], self[7]].distance > 0 then
-      true
-    else
-      false
-    end
-  end
-
-  def inside_triangle?
-    point_a = [self[2], self[3], self[4], self[5], self[0], self[1], self[6], self[7]].same_side?
-    point_b = [self[4], self[5], self[0], self[1], self[2], self[3], self[6], self[7]].same_side?
-    point_c = self.same_side?
-
-    if point_a && point_b && point_c then true
-    else false
-    end
-  end
+def side(p1, p2, pp)
+  return (p2[0] - p1[0]) * (pp[1] - p1[1]) - (p2[1] - p1[1]) * (pp[0] - p1[0])
 end
-
-File.readlines("./input.txt").map(&:chomp).each do |data|
-  if data.split(" ").map(&:to_f).inside_triangle? then
-    puts "YES"
-  else
-    puts "NO"
-  end
+ 
+def inside_triangle?(data)
+  p1 = data.slice(0, 2)
+  p2 = data.slice(2, 2)
+  p3 = data.slice(4, 2)
+  pp = data.slice(6, 2)
+ 
+  point_a = side(p1, p2, pp)
+  point_b = side(p2, p3, pp)
+  point_c = side(p3, p1, pp)
+ 
+  (point_a > 0 && point_b > 0 && point_c > 0) || (point_a < 0 && point_b < 0 && point_c < 0)
+end
+ 
+while line = gets
+  puts inside_triangle?(line.split(" ").map(&:to_f)) ? "YES" : "NO"
 end
